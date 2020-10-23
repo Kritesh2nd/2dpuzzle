@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>2dpuzzle05</title><!--Game Test 01 ------------------------>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      *{margin:0px;padding:0px;box-sizing:border-box;font-family:microsoft sans serif;font-size:16px;columns: #000;}
+      *:focus{outline:none;}
+      .bodies{height:657px;width:100%;position:relative;}
+      .abs{position:absolute;}
+      .ins{position:relative;}
+      .inr{border:0px solid #f00;position:relative;height:100%;width:100%;}
+      .border{border:1px solid #000;}
+      .inr0{border:1px solid #f00;position:relative;height:100%;width:100%;}
+      .inrgmblock{border:1px solid #555;position:relative;height:100%;width:100%;cursor:pointer;font-size:35px;
+        text-align:center;padding-top:24px;}
+      
+      .gamembody{height:500px;width:300px;top:40px;left:180px;}
+      .gmbodys{height:100%;width:100%;display:none;background-color:#b8b8b8;}
+      .fivebtn{list-style:none;width:50%;top:20%;left:25%;}
+      .fivebtn li{border:1px solid #000;text-align:center;padding:5px;border-radius:5px;margin-top:10px;cursor:pointer;transition:.1s;}
+      .fivebtn li:nth-child(2){padding:0;border:none;}
+      
+      .limode{background-color:#b8b8b8;padding:5px;border-radius:5px;transition:.1s;}
+      .limode:hover{background-color:#999;}
+      .fivebtn li:hover{background-color:#999;}
+      .arrows{top:0;padding:4px 8px;border-radius:3px;}
+      .arrows:hover{background-color:#999;}
+      .arrow1{left:-30px;}
+      .arrow2{right:-30px;}
+
+      .timecount{padding:5px 15px;top:10px;left:10px;border-radius:3px;cursor:pointer;}
+      .numbershow{width:200px;padding:5px 7px;top:48px;left:10px;border-radius:3px;cursor:pointer;overflow:auto;}
+      .hidebtn{padding:5px 15px;top:48px;right:10px;border-radius:3px;cursor:pointer;}
+      .hidebtn:hover{background-color:#999;}
+      .gmboard{height:400px;width:300px;top:100px;}
+      .gmblocks{border:0px solid #000;height:100px;width:100px;padding:3px;}
+
+      .youwin{height:100%;width:100%;text-align:center;background-color:rgba(90,90,90,.6);display:none;}
+      .inryouwin{font-size:25px;padding-top:110px;color:#fff;}
+      .removeblock{display:none;}
+      
+
+      .chosecolor{height:80px;width:60px;top:30px;left:20px;border:2px solid #555;}
+      .backbtn{padding:5px 15px;top:10px;right:10px;border-radius:3px;cursor:pointer;}
+      .backbtn:hover{background-color:#999;}
+      .chcolor span{background-color:#555;height:2px;width:2px;position:absolute;}
+      .chcolor span:nth-child(1){height:94%;top:3%;left:33%;}
+      .chcolor span:nth-child(2){height:94%;top:3%;left:66%;}
+      .chcolor span:nth-child(3){width:94%;top:24%;left:3%;}
+      .chcolor span:nth-child(4){width:94%;top:49%;left:3%;}
+      .chcolor span:nth-child(5){width:94%;top:74%;left:3%;}
+      .coloroptions{margin:140px auto;height:200px;width:88%;}
+      .colopts{border:1px solid #555;height:24%;width:23%;cursor:pointer;}
+      .replaybtn{color:#000;padding:5px 15px;border-radius:4px;top:180px;width:50%;left:25%;background-color:#777;cursor:pointer;}
+
+      .helppara{padding:20px;top:50px;}
+
+
+      @media only screen and (max-width:450px) {
+        .gamembody{height:700px;position:static;width:100%;}
+        .gmboard{left:8%;}
+        .numbershow{width:250px;}
+      }
+    </style>
+  </head>
+  <body>
+    <div class = "bodies">
+      <div class = "inr">
+        <div class = "gamembody abs">
+          <div class = "inr">
+            <div class="gmbody01 gmbodys abs">
+              <div class="inr">
+                <ul class="fivebtn abs">
+                  <li onclick = "clkgmbody1()">Play</li>
+                  <li class = "ins">
+                    <div class = "inr limode border">Easy</div>
+                    <span class = "abs border arrow1 arrows" onclick = "clkarrow1()">&lt</span>
+                    <span class = "abs border arrow2 arrows" onclick = "clkarrow2()">&gt</span>
+                  </li>
+                  <li onclick = "clkgmbody2()">Color</li>
+                  <li onclick = "clkgmbody3()">Help</li>
+                  <li onclick = "clkgmbody4()">Achivement</li>
+                </ul>
+              </div>
+            </div>
+            <div class="gmbody02 gmbodys abs">
+              <div class="inr">
+                <div class="backbtn abs border" onclick = "backbtn00()">Back</div>
+                <div class="timecount abs" onclick = "backbtn00()">Time</div>
+                <div class="numbershow abs"></div>
+                <div class="hidebtn abs border" onclick = "hidebtn00()">Hide</div>
+                <div class="gmboard abs">
+                  <div class = "inr">
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock01()">1</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock02()">2</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock03()">3</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock04()">4</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock05()">5</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock06()">6</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock07()">7</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock08()">8</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock09()">9</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock10()">10</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock11()">11</div></div>
+                    <div class = "gmblocks abs"><div class = "inrgmblock" onclick = "clkblock12()">12</div></div>
+                    <div class="youwin abs">
+                      <div class = "inr inryouwin">
+                        Congratulation<br/>You did it ! ! !<br/>
+                        <div class = "replaybtn border abs" onclick = "clkreplay()">Replay</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="gmbody03 gmbodys abs">
+              <div class="inr0">
+                <div class="chosecolor abs border">
+                  <div class="inr chcolor">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+                <div class = "coloroptions ins">
+                  <div class = "colopt01 colopts abs" onclick = "clkcolopts01()"></div>
+                  <div class = "colopt02 colopts abs" onclick = "clkcolopts02()"></div>
+                  <div class = "colopt03 colopts abs" onclick = "clkcolopts03()"></div>
+                  <div class = "colopt04 colopts abs" onclick = "clkcolopts04()"></div>
+                  <div class = "colopt05 colopts abs" onclick = "clkcolopts05()"></div>
+                  <div class = "colopt06 colopts abs" onclick = "clkcolopts06()"></div>
+                  <div class = "colopt07 colopts abs" onclick = "clkcolopts07()"></div>
+                  <div class = "colopt08 colopts abs" onclick = "clkcolopts08()"></div>
+                </div>
+                <div class="backbtn abs border" onclick = "backbtn00()">Back</div>
+              </div>
+            </div>
+            <div class="gmbody04 gmbodys abs">
+              <div class="inr">
+                <div class="backbtn abs border" onclick = "backbtn00()">Back</div>
+                <div class = "helppara abs">
+                  All blocks are scrambled, your aim is to re-arrange those blocks by reading number<br/>
+                  <br/>
+                  Threre are three mode easy, normal, hard<br/>
+                  <br/>
+                  <b>Easy:</b> It consist numbers from 1-11<br/>
+                  <br/>
+                  <b>Normal:</b> It consist multiplication table from 2-10<br/>
+                  here random number is 7<br/>
+                  eg: 7 14 21 28 35.....<br/>
+                  <br/>
+                  <b>Hard:</b> It consist random number multiplication table which both range from 2-10
+                  here random numbers are 3 and 6, 3 * 6 is 12<br/>
+                  starting from 12, it goes by adding 6<br/>
+                  eg: 12 18 24 30 36.....<br/>
+                  <br>
+                  <br/>
+                  Copyrights &#169; 2020 Kritesh Thapa, All rights reserved.
+                </div>
+              </div>
+            </div>
+            <div class="gmbody05 gmbodys abs">
+              <div class="inr">
+                <div class="backbtn abs border" onclick = "backbtn00()">Back</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var gmbodyx = document.querySelectorAll(".gmbodys");
+      var ingblkx = document.querySelectorAll(".inrgmblock");
+      var coloptx = document.querySelectorAll(".colopts");
+      var chcolrx = document.querySelector(".chosecolor");
+      var limodex = document.querySelector(".limode");
+      var noshowx = document.querySelector(".numbershow");
+      var youwinx = document.querySelector(".youwin");
+      var inuwinx = document.querySelector(".inryouwin");
+      var tcountx = document.querySelector(".timecount");
+      var hidbtnx = document.querySelector(".hidebtn");
+      var gblockx = document.querySelectorAll(".gmblocks");
+      
+      var colorstore = [];var defaultcol = "47ce8e";var modex = "easy";var modexno = 0;var block4val = [];
+      var blockval = [];var bsec = [];var scramble1 = [];k=0;l=0;var easyno = [];var normalno = [];var hardno = [];
+      var gameover = "no";var sumx;var slowfuns;var timecount = 0;var timevar;var hidebtn = "show";
+      //var inrgmblock = document.querySelectorAll(".inrgmblock");
+      //var hidebtn = document.querySelector(".hidebtn");
+      for(var i=0;i<4;i++){
+        for(var j=0+k;j<3+k;j++){
+          gblockx[j].style.top = 100*i + "px";
+          gblockx[j].style.left = 100*l + "px";
+          l++;
+          blockval[j] = [i+1,l];
+          bsec[j] = [i+1,l];
+          scramble1[j] = [i+1,l];
+          console.log(j+1,i+1,l,bsec[j]);
+        }
+        k+=3;
+        l=0;        
+      }
+      colorarrange();
+      function colorarrange(){
+        var c=0;var d=0;var e=[];
+        for(var a=0;a<2;a++){
+          for(var b=0;b<4;b++){
+            coloptx[c].style.top = a*27 + "%";
+            coloptx[c].style.left = b*25 + "%";
+            c++;
+          }
+        }
+        coloptx[0].style.backgroundColor = "#47ce8e";
+        coloptx[1].style.backgroundColor = "#ff6666";
+        coloptx[2].style.backgroundColor = "#ffd561";
+        coloptx[3].style.backgroundColor = "#00868b";
+        coloptx[4].style.backgroundColor = "#ffa500";
+        coloptx[5].style.backgroundColor = "#fd478b";
+        coloptx[6].style.backgroundColor = "#ee5c42";
+        coloptx[7].style.backgroundColor = "#7b68ee";
+        colorstore[0] = "47ce8e";
+        colorstore[1] = "ff6666";
+        colorstore[2] = "ffd561";
+        colorstore[3] = "00868b";
+        colorstore[4] = "ffa500";
+        colorstore[5] = "fd478b";
+        colorstore[6] = "ee5c42";
+        colorstore[7] = "7b68ee";
+        chcolrx.style.backgroundColor = "#" + "47ce8e";
+      }
+      for(var a=0;a<12;a++){
+        ingblkx[a].style.backgroundColor = "#" + "47ce8e";
+      }
+      function clkcolopts01(){inscolorbgx0(0);}
+      function clkcolopts02(){inscolorbgx0(1);}
+      function clkcolopts03(){inscolorbgx0(2);}
+      function clkcolopts04(){inscolorbgx0(3);}
+      function clkcolopts05(){inscolorbgx0(4);}
+      function clkcolopts06(){inscolorbgx0(5);}
+      function clkcolopts07(){inscolorbgx0(6);}
+      function clkcolopts08(){inscolorbgx0(7);}
+      function inscolorbgx0(colstval){
+        chcolrx.style.backgroundColor = "#" + colorstore[colstval];
+        defaultcol = colorstore[colstval];
+        for(var a=0;a<11;a++){
+          ingblkx[a].style.backgroundColor = "#" + defaultcol;
+        }
+        ingblkx[11].style.backgroundColor = "#" + "b8b8b8";
+        ingblkx[11].style.border = "none";
+      }
+      for(var a=0;a<5;a++){
+        gmbodyx[a].style.display = "none";
+      }
+      gmbodyx[0].style.display = "block";//-------------------------------------------------------------------
+      function clkarrow1(){if(modexno >= 1){chosemodex(-1);}}
+      function clkarrow2(){if(modexno <= 1){chosemodex(1);}}
+      function chosemodex(modxval){
+        if(modexno >=0 && modexno <= 2){modexno = modexno + modxval;}
+        if(modexno == 0){
+          limodex.innerHTML = "Easy";
+          modex = "easy";
+        }
+        else if(modexno == 1){
+          limodex.innerHTML = "Normal";
+          modex = "normal";
+        }
+        else if(modexno == 2){
+          limodex.innerHTML = "Hard";
+          modex = "hard";
+        }
+        chosmodex();
+      }
+      function chosmodex(){
+        easyno = [];normalno = [];hardno = [];
+        if(modex == "easy"){
+          for(var a=0;a<12;a++){
+            ingblkx[a].innerHTML = a+1;
+            easyno.push(a+1);
+          }
+          easyno = easyno.slice(0, -1);
+          noshowx.innerHTML = easyno;
+        }
+        else if(modex == "normal"){
+          var b = Math.floor(Math.random() * 9)+2;
+          for(var c=0;c<12;c++){
+            ingblkx[c].innerHTML = (c+1)*b;
+            normalno.push((c+1)*b);
+          }
+          normalno = normalno.slice(0, -1);
+          noshowx.innerHTML = normalno;
+        }
+        else if(modex == "hard"){
+          var d = Math.floor(Math.random() * 9)+2;
+          var e = Math.floor(Math.random() * 9)+2;
+          var g=0;
+          for(var f=0+d;f<12+d;f++){
+            ingblkx[g].innerHTML = f*e;
+            g++;
+            hardno.push(f*e);
+          }
+          hardno = hardno.slice(0, -1);
+          noshowx.innerHTML = hardno;
+        }
+        ingblkx[11].innerHTML = "";
+      }
+      youwinx.style.display = "none";
+     
+      function clkreplay(){
+        youwinx.style.display = "none";
+        scramx0();
+        console.log("clicked none");
+      }  
+      function clkgmbody1(){clkgmbody0x(1);chosmodex();scramx0();youwinx.style.display = "none";}
+      function clkgmbody2(){clkgmbody0x(2);}
+      function clkgmbody3(){clkgmbody0x(3);}
+      function clkgmbody4(){clkgmbody0x(4);}
+      function clkgmbody0x(clkbtnx){
+        for(var a=0;a<5;a++){
+          gmbodyx[a].style.display = "none";
+        }
+        gmbodyx[clkbtnx].style.display = "block";
+      }
+      function backbtn00(){
+        for(var a=0;a<5;a++){
+          gmbodyx[a].style.display = "none";
+        }
+        gmbodyx[0].style.display = "block";
+      }
+      ingblkx[11].style.backgroundColor = "#" + "b8b8b8";
+      ingblkx[11].style.border = "none";
+      ingblkx[11].innerHTML = "";
+
+
+      function clkblock01(){clickblock00(0,bsec[0]);}
+      function clkblock02(){clickblock00(1,bsec[1]);}
+      function clkblock03(){clickblock00(2,bsec[2]);}
+      function clkblock04(){clickblock00(3,bsec[3]);}
+      function clkblock05(){clickblock00(4,bsec[4]);}
+      function clkblock06(){clickblock00(5,bsec[5]);}
+      function clkblock07(){clickblock00(6,bsec[6]);}
+      function clkblock08(){clickblock00(7,bsec[7]);}
+      function clkblock09(){clickblock00(8,bsec[8]);}
+      function clkblock10(){clickblock00(9,bsec[9]);}
+      function clkblock11(){clickblock00(10,bsec[10]);}
+      function clkblock12(){clickblock00(11,bsec[11]);}
+      block4valfuns();
+      function block4valfuns(){
+        block4val[0] = [blockval[11][0]-1,blockval[11][1]];
+        block4val[1] = [blockval[11][0],blockval[11][1]-1];
+        block4val[2] = [blockval[11][0],blockval[11][1]+1];
+        block4val[3] = [blockval[11][0]+1,blockval[11][1]];
+      }
+      function clickblock00(boxvalx,bsecx){
+        if(((blockval[boxvalx][0] == block4val[0][0] && blockval[boxvalx][1] == block4val[0][1])|| 
+          (blockval[boxvalx][0] == block4val[1][0] && blockval[boxvalx][1] == block4val[1][1])|| 
+          (blockval[boxvalx][0] == block4val[2][0] && blockval[boxvalx][1] == block4val[2][1])|| 
+          (blockval[boxvalx][0] == block4val[3][0] && blockval[boxvalx][1] == block4val[3][1])) && gameover == "no"){
+            gblockx[boxvalx].style.top = (block4val[0][0])*100 + "px";
+            gblockx[boxvalx].style.left = (block4val[0][1]-1)*100 + "px";
+            gblockx[11].style.top = (bsecx[0]-1)*100 + "px";
+            gblockx[11].style.left = (bsecx[1]-1)*100 + "px";
+            blockval[boxvalx] = [blockval[11][0],blockval[11][1]];
+            bsec[boxvalx] = [blockval[11][0],blockval[11][1]];
+            update4vals(bsecx[0],bsecx[1]);
+            checkwinx();
+        }
+      }
+      function update4vals(upbva,upbvb){
+        blockval[11] = [upbva,upbvb];
+        block4val[0] = [blockval[11][0]-1,blockval[11][1]];
+        block4val[1] = [blockval[11][0],blockval[11][1]-1];
+        block4val[2] = [blockval[11][0],blockval[11][1]+1];
+        block4val[3] = [blockval[11][0]+1,blockval[11][1]];
+        console.log(blockval[11],block4val[0],block4val[1],block4val[2],block4val[3]);
+      }
+      function scramx0(){
+        for(var can=0;can<800;can++){
+          var randvalx = (Math.floor(Math.random() * 12 + 1)-1);
+          clickblock00(randvalx,bsec[randvalx]);
+          ingblkx[11].innerHTML = "";
+        }
+        timecount = 0;
+        clearInterval(timevar);
+        counttime();
+      }
+      function checkwinx(){
+        sumx=0;
+        for(var a=0;a<12;a++){
+          console.log(a+1,blockval[a],scramble1[a]);
+          if(blockval[a][0] == scramble1[a][0] && blockval[a][1] == scramble1[a][1]){
+            sumx=sumx+1;
+          }
+        }
+        if(sumx == 12 && timecount >=5){
+          clearInterval(timevar);
+          timecount = 0;
+          slowfuns = setTimeout(myTimer, 1000);
+        }
+        console.log(sumx);
+      }
+      function myTimer(){
+        youwinx.style.display = "block";
+      }
+      function counttime(){
+        timevar = setInterval(countsec, 1000);
+      }
+      function countsec(){
+        tcountx.innerHTML = timecount + " sec";
+        timecount+=1;
+      }
+      function hidebtn00(){
+          if(hidebtn == "show"){
+            hidebtn = "hide";
+            hidbtnx.innerHTML = "Show";
+            noshowx.style.color = "rgba(0,0,0,0)";
+          }
+          else if(hidebtn == "hide"){
+            hidebtn = "show";
+            hidbtnx.innerHTML = "Hide";
+            noshowx.style.color = "rgba(0,0,0,1)";
+          }
+        }
+      var charX = 1;
+      function moveChar(){
+        
+      };
+      var loop = setInterval(moveChar,1000/60);
+    </script>
+  </body>
+</html>
